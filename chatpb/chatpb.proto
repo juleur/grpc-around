@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package chatpb;
+
+option go_package="chatpb";
+
+message Void {}
+
+message ChatDetails {
+  string chat_id = 1;
+  string username = 2;
+  string message = 3;
+}
+
+message SendMessagesRequest {
+  string chat_id = 1;
+  string username = 2;
+  string message = 3;
+}
+
+message RcvMessagesRequest {
+  string chat_id = 1;
+}
+
+message RcvMessagesResponse {
+  string usermane = 1;
+  string message = 2;
+}
+
+message NewChatRequest {
+  string chat_id = 1;
+}
+
+message CloseChatRequest {
+  string chat_id = 1;
+}
+
+service StreamChat {
+  rpc NewChat(NewChatRequest) returns (Void) {};
+  rpc SendMessages(SendMessagesRequest) returns (Void) {};
+  rpc RcvMessages(RcvMessagesRequest) returns (stream RcvMessagesResponse) {};
+  rpc CloseChat(CloseChatRequest) returns (Void) {};
+}
